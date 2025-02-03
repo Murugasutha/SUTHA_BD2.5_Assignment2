@@ -200,7 +200,7 @@ function filterByExchange(stock, exchange) {
   return stock.exchange.toLowerCase() === exchange.toLowerCase();
 }
 
-app.get('/stocks/filter/exchange/:exchange', (req, res) => {
+app.get('/stocks/filter/exchange', (req, res) => {
   let exchange = req.query.exchange.toLowerCase();
   let stockCopy = stocks.slice();
   let filteredStocks = stockCopy.filter((stock) =>
@@ -214,7 +214,7 @@ function filterByIndustrialSector(stock, industry) {
   return stock.industry.toLowerCase() === industry.toLowerCase();
 }
 
-app.get('/stocks/filter/industry/:industry', (req, res) => {
+app.get('/stocks/filter/industry', (req, res) => {
   let industry = req.query.industry.toLowerCase();
   let filteredStock = stocks.filter((stock) =>
     filterByIndustrialSector(stock, industry)

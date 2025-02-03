@@ -172,8 +172,8 @@ let stocks = [
 
 //1. sorting condition if the price is high to low or else low to high.
 
-app.get('/stocks/sort/pricing/:pricing', (req, res) => {
-  let pricing = req.params.pricing;
+app.get('/stocks/sort/pricing', (req, res) => {
+  let pricing = parseFloat(req.query.pricing);
   let stockCopy = stocks.slice();
   let sortedstock = stockCopy.sort((stock1, stock2) =>
     pricing === 'high-to-low'
@@ -184,8 +184,8 @@ app.get('/stocks/sort/pricing/:pricing', (req, res) => {
 });
 
 //2.Endpoint 2: Get the stocks sorted based on their Growth.
-app.get('/stocks/sort/growth/:growth', (req, res) => {
-  let growth = req.params.growth;
+app.get('/stocks/sort/growth', (req, res) => {
+  let growth = parseFloat(req.query.growth);
   let stockCopy = stocks.slice();
   let sortedstock = stockCopy.sort((stock1, stock2) =>
     growth === 'low-to-high'
@@ -201,7 +201,7 @@ function filterByExchange(stock, exchange) {
 }
 
 app.get('/stocks/filter/exchange/:exchange', (req, res) => {
-  let exchange = req.params.exchange.toLowerCase();
+  let exchange = req.query.exchange.toLowerCase();
   let stockCopy = stocks.slice();
   let filteredStocks = stockCopy.filter((stock) =>
     filterByExchange(stock, exchange)
@@ -215,7 +215,7 @@ function filterByIndustrialSector(stock, industry) {
 }
 
 app.get('/stocks/filter/industry/:industry', (req, res) => {
-  let industry = req.params.industry.toLowerCase();
+  let industry = req.query.industry.toLowerCase();
   let filteredStock = stocks.filter((stock) =>
     filterByIndustrialSector(stock, industry)
   );

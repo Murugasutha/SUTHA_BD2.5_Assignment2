@@ -171,28 +171,43 @@ let stocks = [
 ];
 
 //1. sorting condition if the price is high to low or else low to high.
-
+function sortByHighToLow(stock1,stock2){
+  return stock2.price - stock1.price;
+}
+function sortByLowToHigh(stock1,stock2){
+  return stock1.price - stock2.price;
+}
 app.get('/stocks/sort/pricing', (req, res) => {
-  let pricing = parseFloat(req.query.pricing);
+  let pricing = req.query.pricing;
   let stockCopy = stocks.slice();
-  let sortedstock = stockCopy.sort((stock1, stock2) =>
-    pricing === 'high-to-low'
-      ? stock2.price - stock1.price
-      : stock1.price - stock2.price
-  );
-  res.json({ stocks: sortedstock });
+  if (pricing === 'high-to-low'){
+    stockCopy.sort(sortByHighToLow);
+  } else{
+    stockCopy.sort(sortByLowToHigh);
+  }
+  res.json({ stocks: stockCopy });
 });
 
 //2.Endpoint 2: Get the stocks sorted based on their Growth.
+function sortGrowthByLowToHigh(stock1, stock2){
+  return stock1.growth - stock2.growth;
+}
+
+function sortGrowthByHighToLow(stock1, stock2){
+  return stock2.growth - stock1.growth;
+}
+
 app.get('/stocks/sort/growth', (req, res) => {
-  let growth = parseFloat(req.query.growth);
+  let growth = req.query.growth;
   let stockCopy = stocks.slice();
-  let sortedstock = stockCopy.sort((stock1, stock2) =>
-    growth === 'low-to-high'
-      ? stock1.growth - stock2.growth
-      : stock2.growth - stock1.growth
-  );
-  res.json({ stocks: sortedstock });
+  
+  if (growth === 'high-to-low'){
+    stockCopy.sort(sortGrowthByHighToLow)
+  }
+  else{
+    stockCopy.sort(sortGrowthByLowToHigh)
+  }
+  res.json({ stocks: stockCopy});
 });
 
 //3: Filter the stocks based on the 2 Stock Exchange (NSE. and BSE)
